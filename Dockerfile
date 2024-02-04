@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-${ROS_DISTRO}-rosapi-msgs \
     ros-${ROS_DISTRO}-geometry-msgs \
     ros-${ROS_DISTRO}-sensor-msgs \
+    ros-${ROS_DISTRO}-control-msgs \
+    ros-${ROS_DISTRO}-controller-manager-msgs \
     && rm -rf /var/lib/apt/lists/*
 
 COPY ros_entrypoint.sh .
