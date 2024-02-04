@@ -9,4 +9,4 @@ docker run -it --rm \
 --env UID=$(id -u) \
 --env GID=$(id -g) \
 --privileged \
-ghcr.io/rosblox/${REPOSITORY_NAME}:iron
+ghcr.io/helix-robotics-ag/${REPOSITORY_NAME}:iron
