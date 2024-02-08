@@ -15,4 +15,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY ros_entrypoint.sh .
 
 RUN echo 'source /opt/ros/iron/setup.bash; ros2 launch rosbridge_server rosbridge_websocket_launch.xml' >> /run.sh && chmod +x /run.sh
-RUN echo 'alias run="su - ros /run.sh"' >> /etc/bash.bashrc
+RUN echo 'alias run="su - ros --whitelist-environment=\"ROS_DOMAIN_ID\" /run.sh"' >> /etc/bash.bashrc
