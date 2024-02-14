@@ -1,12 +1,8 @@
 #!/bin/bash
 
-REPOSITORY_NAME="$(basename "$(dirname -- "$( readlink -f -- "$0"; )")")"
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-docker run -it --rm \
---network=host \
---ipc=host \
---pid=host \
---env UID=${MY_UID} \
---env ROS_DOMAIN_ID \
---privileged \
-ghcr.io/helix-robotics-ag/${REPOSITORY_NAME}:iron
+export HOST_UID=$(id -u)
+
+docker compose -f $SCRIPT_DIR/docker-compose.yml run \
+ros-rosbridge-suite bash
