@@ -1,5 +1,15 @@
 ARG ROS_DISTRO=iron
 
+FROM ros:${ROS_DISTRO}-ros-base AS builder
+
+WORKDIR /colcon_ws
+
+RUN git clone https://github.com/helix-robotics-ag/ros-helix.git src/helix_ros && \
+    . /opt/ros/${ROS_DISTRO}/setup.sh && \
+    colcon build --packages-select helix_transmission_interfaces --cmake-args -DCMAKE_BUILD_TYPE=Release --event-handlers console_direct+
+
+
+
 FROM ros:${ROS_DISTRO}-ros-core
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -11,6 +21,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-${ROS_DISTRO}-control-msgs \
     ros-${ROS_DISTRO}-controller-manager-msgs \
     && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /colcon_ws/install/helix_transmission_interfaces /opt/ros/${ROS_DISTRO}
 
 COPY ros_entrypoint.sh .
 
