@@ -4,7 +4,7 @@ FROM ros:${ROS_DISTRO}-ros-base AS builder
 
 WORKDIR /colcon_ws
 
-RUN git clone https://github.com/helix-robotics-ag/ros-helix.git src/helix_ros && \
+RUN git clone -b seb/add_helix_control_interfaces https://github.com/helix-robotics-ag/ros-helix.git src/helix_ros && \
     . /opt/ros/${ROS_DISTRO}/setup.sh && \
     colcon build --packages-select helix_transmission_interfaces --cmake-args -DCMAKE_BUILD_TYPE=Release --event-handlers console_direct+
 
